@@ -40,7 +40,7 @@ public class Board {
 	public int winner() {
 		int winner = 0;
 		// Horizontal check
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < 9; j++) {
 			for (int i = 0; i < 13; i++) {
 				if (board[i][j] == 1 && this.board[i][j + 1] == 1 && this.board[i][j + 2] == 1
 						&& this.board[i][j + 3] == 1 && this.board[i][j + 4] == 1) {
@@ -53,34 +53,50 @@ public class Board {
 			}
 		}
 
-		// Vertical check
+		// Vertical check bottom up
 		for (int j = 0; j < 13; j++) {
-			for (int i = 0; i < 10; i++) {
-				if (board[i][j] == 1 && this.board[i - 1][j] == 1 && this.board[i - 2][j] == 1
-						&& this.board[i - 3][j] == 1 && this.board[i - 4][j] == 1) {
+			for (int i = 0; i < 9; i++) {
+				if (board[i][j] == 1 && this.board[i + 1][j] == 1 && this.board[i + 2][j] == 1
+						&& this.board[i + 3][j] == 1 && this.board[i + 4][j] == 1) {
 					winner = 1;
 				}
-				if (board[i][j] == 2 && this.board[i - 1][j] == 2 && this.board[i - 2][j] == 2
-						&& this.board[i - 3][j] == 2 && this.board[i - 4][j] == 2) {
+				if (board[i][j] == 2 && this.board[i + 1][j] == 2 && this.board[i + 2][j] == 2
+						&& this.board[i + 3][j] == 2 && this.board[i + 4][j] == 2) {
 					winner = 2;
 				}
 			}
 		}
 
-		// ascendingDiagonalCheck 
-	    for (int i=3; i<13; i++){
-	        for (int j=0; j<10; j++){
-	            if (board[i][j] == 1 && board[i-1][j+1] == 1 && board[i-2][j+2] == 1 && board[i-3][j+3] == 1 && board[i-4][j+4] == 1)
-	                return 1;
-	        }
-	    }
-//	    // descendingDiagonalCheck
-//	    for (int i=3; i<getWidth(); i++){
-//	        for (int j=3; j<getHeight(); j++){
-//	            if (this.board[i][j] == player && this.board[i-1][j-1] == player && this.board[i-2][j-2] == player && this.board[i-3][j-3] == player)
-//	                return true;
-//	        }
-//	    }
+		// ascendingDiagonalCheck
+		for (int i = 3; i < 13; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (board[i][j] == 1 && board[i - 1][j + 1] == 1 && board[i - 2][j + 2] == 1 && board[i - 3][j + 3] == 1
+						&& board[i - 4][j + 4] == 1)
+					return 1;
+			}
+		}
+		for (int i = 3; i < 13; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (board[i][j] == 2 && board[i - 1][j + 1] == 2 && board[i - 2][j + 2] == 2 && board[i - 3][j + 3] == 2
+						&& board[i - 4][j + 4] == 2)
+					return 2;
+			}
+		}
+		// descendingDiagonalCheck
+		for (int i = 3; i < 13; i++) {
+			for (int j = 3; j < 13; j++) {
+				if (this.board[i][j] == 1 && this.board[i - 1][j - 1] == 1 && this.board[i - 2][j - 2] == 1
+						&& this.board[i - 3][j - 3] == 1 && this.board[i - 4][j - 4] == 1)
+					return 1;
+			}
+		}
+		for (int i = 3; i < 13; i++) {
+			for (int j = 3; j < 13; j++) {
+				if (this.board[i][j] == 2 && this.board[i - 1][j - 1] == 2 && this.board[i - 2][j - 2] == 2
+						&& this.board[i - 3][j - 3] == 2 && this.board[i - 4][j - 4] == 2)
+					return 2;
+			}
+		}
 
 		return winner;
 	}

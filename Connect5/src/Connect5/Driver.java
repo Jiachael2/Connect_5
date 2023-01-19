@@ -1,6 +1,5 @@
 package Connect5;
 
-import javax.swing.JButton;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,10 +28,6 @@ public class Driver extends Application {
 		Board board = new Board();
 		board.createBoard();
 
-		Image win = new Image("file:1Win.png");
-		ImageView winner = new ImageView(win);
-		Image wWin = new Image("file:2Win.png");
-		ImageView wWinner = new ImageView(wWin);
 		Image image = new Image("file:board.png");
 		ImageView mv = new ImageView(image);
 		Image black = new Image("file:bPiece.png");
@@ -42,15 +37,10 @@ public class Driver extends Application {
 		label.setFont(font);
 		label.setMaxWidth(Double.MAX_VALUE);
 		label.setAlignment(Pos.CENTER);
-
-		Group b = new Group();
-		Group d = new Group();
+		label.setLayoutX(100);
+		label.setLayoutY(200);
 		Group root = new Group();
 
-		Scene c = new Scene(b, 700, 700);
-		Scene f = new Scene(d, 700, 700);
-		b.getChildren().addAll(winner);
-		d.getChildren().addAll(wWinner);
 		
 		for (int i = 0; i < 13; i++) {
 			for (int j = 0; j < 13; j++) {
@@ -90,15 +80,19 @@ public class Driver extends Application {
 					}
 					if (board.winner() == 1) {
 						label.setText("Black Wins");
+						grid.setDisable(true);
 					}
 					if (board.winner() == 2) {
+						label.setLayoutX(70);
 						label.setText("White Wins");
+						grid.setDisable(true);
 					}
 				});
 			}
 		}
 		
-		root.getChildren().addAll(mv, label, grid);
+		
+		root.getChildren().addAll(mv, grid, label);
 
 		Scene scene = new Scene(root, 700, 700);
 		stage.setScene(scene);
