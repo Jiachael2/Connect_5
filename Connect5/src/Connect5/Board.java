@@ -1,6 +1,7 @@
 package Connect5;
 
 public class Board {
+	
 	private int[][] board = new int[13][13];
 
 	public Board() {
