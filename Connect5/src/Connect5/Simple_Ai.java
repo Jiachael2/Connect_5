@@ -34,8 +34,10 @@ public class Simple_Ai extends Board {
 		column += 1;
 	}
 
-	public int first() {
-		return turn;
+	public boolean first() {
+		if (turn == 0) {
+		return true; }
+		return false;
 	}
 
 	public void add() {
@@ -43,16 +45,14 @@ public class Simple_Ai extends Board {
 	}
 
 	public boolean checkX() {
-		if (getBoard()[row][column + 1] == 0 && getBoard()[row][column + 2] == 0 && getBoard()[row][column + 3] == 0
-				&& getBoard()[row][column + 4] == 0) {
+		if (getBoard()[row][column +1] == 0) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean checkY() {
-		if (getBoard()[row][column + 1] == 0 && getBoard()[row][column + 2] == 0 && getBoard()[row][column + 3] == 0
-				&& getBoard()[row][column + 4] == 0) {
+		if (getBoard()[row + 1][column] == 0) {
 			return true;
 		}
 		return false;

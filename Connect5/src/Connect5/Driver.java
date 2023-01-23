@@ -66,39 +66,30 @@ public class Driver extends Application {
 						((NewButton) e.getSource()).setGraphic(black2);
 						((NewButton) e.getSource()).setDisable(true);
 						((NewButton) e.getSource()).setOpacity(1);
-						player.add();
 						board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
 						board.printBoard();
-						if (ai.first() == 0) {
-						ai.setX(((NewButton) e.getSource()).getRow()+1);
-						ai.setY(((NewButton) e.getSource()).getCol());
-						slots[((NewButton) e.getSource()).getRow()+1][((NewButton) e.getSource()).getCol()].setGraphic(white2);
-						slots[((NewButton) e.getSource()).getRow()+1][((NewButton) e.getSource()).getCol()].setDisable(true);
-						slots[((NewButton) e.getSource()).getRow()+1][((NewButton) e.getSource()).getCol()].setOpacity(1);
-						board.isWhite(((NewButton) e.getSource()).getRow()+1, ((NewButton) e.getSource()).getCol());
-						board.printBoard();	 
-						player.sub();
-						ai.add();
-						}
-					}else {
-						if(ai.checkX()) {
-							ai.addX();
-							slots[ai.getX()][ai.getY()].setGraphic(white2);
-							slots[ai.getX()][ai.getY()].setDisable(true);
-							slots[ai.getX()][ai.getY()].setOpacity(1);
-							player.sub();
-							board.isWhite(ai.getX(), ai.getY());
-							board.printBoard();	
+						if(ai.first()) {
+							ai.setX(((NewButton) e.getSource()).getRow()+1);
+							ai.setY(((NewButton) e.getSource()).getCol());
+							ai.add();
+						if(ai.checkX() == true) {
+								ai.addX();
+								slots[ai.getX()][ai.getY()].setGraphic(white2);
+								slots[ai.getX()][ai.getY()].setDisable(true);
+								slots[ai.getX()][ai.getY()].setOpacity(1);
+								board.isWhite(ai.getX(), ai.getY());
+								board.printBoard();	
 						} else {
-							ai.addY();
-							slots[ai.getX()][ai.getY()].setGraphic(white2);
-							slots[ai.getX()][ai.getY()].setDisable(true);
-							slots[ai.getX()][ai.getY()].setOpacity(1);
-							player.sub();
-							board.isWhite(ai.getX(), ai.getY());
-							board.printBoard();	
+								ai.addY();
+								slots[ai.getX()][ai.getY()].setGraphic(white2);
+								slots[ai.getX()][ai.getY()].setDisable(true);
+								slots[ai.getX()][ai.getY()].setOpacity(1);
+						
+								board.isWhite(ai.getX(), ai.getY());
+								board.printBoard();	
+							}
 						}
-					}
+						}
 					
 					if (board.winner() == 1) {
 						label.setText("Black Wins");
