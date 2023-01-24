@@ -1,13 +1,39 @@
 package Connect5;
 
+import java.util.Random;
+
 public class Simple_Ai extends Board {
 
 	private int column;
 	private int row;
-	private int turn;
 
 	public Simple_Ai() {
 
+	}
+
+	public void setPos() {
+		Random rand = new Random();
+		int n = rand.nextInt(5, 8);
+		if (getBoard()[n][n] == 0) {
+			column = n;
+			row = n;
+		} else {
+			int i = rand.nextInt(5, 8);
+			column = i;
+			row = i;
+		}
+	}
+	public void setPos2() {
+		Random rand = new Random();
+		int n = rand.nextInt(13);
+		if (getBoard()[n][n] == 0) {
+			column = n;
+			row = n;
+		} else {
+			int i = rand.nextInt(5, 8);
+			column = i;
+			row = i;
+		}
 	}
 
 	public int getY() {
@@ -34,28 +60,13 @@ public class Simple_Ai extends Board {
 		column += 1;
 	}
 
-	public boolean first() {
-		if (turn == 0) {
-		return true; }
-		return false;
-	}
-
-	public void add() {
-		turn += 1;
-	}
-
-	public boolean checkX() {
-		if (getBoard()[row][column +1] == 0) {
-			return true;
-		}
-		return false;
-	}
 
 	public boolean checkY() {
-		if (getBoard()[row + 1][column] == 0) {
-			return true;
+		int num = row + 1;
+		if (getBoard()[num][column] == 1) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 }
