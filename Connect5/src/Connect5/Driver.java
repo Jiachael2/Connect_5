@@ -1,24 +1,25 @@
 package Connect5;
 
 import javafx.application.Application;
-import javafx.concurrent.Task;
-
-import java.util.Random;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
+	static int playerState = 0;
 
 	public void start(Stage stage) {
+
 		GridPane grid = new GridPane();
 		grid.setMinSize(400, 200);
 		grid.setPadding(new Insets(13, 13, 13, 13));
@@ -46,131 +47,167 @@ public class Driver extends Application {
 		Group root = new Group();
 		ai.setPos();
 
-//		for (int i = 0; i < 13; i++) {
-//			for (int j = 0; j < 13; j++) {
-//				slots[i][j] = new NewButton(i, j);
-//				slots[i][j].setShape(new Circle(10));
-//				slots[i][j].setMinSize(40, 40);
-//				slots[i][j].setMaxSize(40, 40);
-//
-//				ImageView black2 = new ImageView(black);
-//				black2.setPreserveRatio(true);
-//				black2.fitWidthProperty().bind(slots[i][j].widthProperty());
-//				black2.fitHeightProperty().bind(slots[i][j].heightProperty());
-//				ImageView white2 = new ImageView(white);
-//				white2.setPreserveRatio(true);
-//				white2.fitWidthProperty().bind(slots[i][j].widthProperty());
-//				white2.fitHeightProperty().bind(slots[i][j].heightProperty());
-//
-//				slots[i][j].setStyle();
-//				grid.add(slots[i][j], i, j);
-//				board.printBoard();
-//				slots[i][j].setOnAction(e -> {
-//					((NewButton) e.getSource()).setGraphic(black2);
-//					((NewButton) e.getSource()).setDisable(true);
-//					((NewButton) e.getSource()).setOpacity(1);
-//					board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
-//					board.printBoard();
-//					if (board.getBoard()[ai.getY()][ai.getX() + 1] == 0) {
-//						ai.addX();
-//						slots[ai.getX()][ai.getY()].setGraphic(white2);
-//						slots[ai.getX()][ai.getY()].setDisable(true);
-//						slots[ai.getX()][ai.getY()].setOpacity(1);
-//						board.isWhite(ai.getX(), ai.getY());
-//						board.printBoard();
-//					} else if (board.getBoard()[ai.getY() + 1][ai.getX()] == 0) {
-//						ai.addY();
-//						slots[ai.getX()][ai.getY()].setGraphic(white2);
-//						slots[ai.getX()][ai.getY()].setDisable(true);
-//						slots[ai.getX()][ai.getY()].setOpacity(1);
-//						board.isWhite(ai.getX(), ai.getY());
-//						board.printBoard();
-//					} else if (board.getBoard()[ai.getY() + 1][ai.getX() + 1] == 0) {
-//						ai.addY();
-//						ai.addX();
-//						slots[ai.getX()][ai.getY()].setGraphic(white2);
-//						slots[ai.getX()][ai.getY()].setDisable(true);
-//						slots[ai.getX()][ai.getY()].setOpacity(1);
-//						board.isWhite(ai.getX(), ai.getY());
-//						board.printBoard();
-//					} else {
-//						ai.setPos2();
-//					}
-//
-//					if (board.winner() == 1) {
-//						label.setText("Black Wins");
-//						grid.setDisable(true);
-//					}
-//					if (board.winner() == 2) {
-//						label.setLayoutX(70);
-//						label.setText("White Wins");
-//						grid.setDisable(true);
-//					}
-//				});
-//			}
-//		}
+		// Buttons to start
+		Font font2 = new Font("Arial", 25);
+		Image menuBackground = new Image("file:board.png");
+		ImageView background = new ImageView(menuBackground);
+		HBox playOptions = new HBox(60);
 
-		for (int i = 0; i < 13; i++) {
-			for (int j = 0; j < 13; j++) {
-				slots[i][j] = new NewButton(i, j);
-				slots[i][j].setShape(new Circle(10));
-				slots[i][j].setMinSize(40, 40);
-				slots[i][j].setMaxSize(40, 40);
+		Button btnPlayer = new Button("Player vs Player");
+		btnPlayer.setFont(font2);
 
-				ImageView black2 = new ImageView(black);
-				black2.setPreserveRatio(true);
-				black2.fitWidthProperty().bind(slots[i][j].widthProperty());
-				black2.fitHeightProperty().bind(slots[i][j].heightProperty());
-				ImageView white2 = new ImageView(white);
-				white2.setPreserveRatio(true);
-				white2.fitWidthProperty().bind(slots[i][j].widthProperty());
-				white2.fitHeightProperty().bind(slots[i][j].heightProperty());
+		Button computer = new Button("Player vs AI");
+		computer.setFont(font2);
 
-				slots[i][j].setStyle();
-				grid.add(slots[i][j], i, j);
-				board.printBoard();
+		playOptions.setLayoutX(125);
+		playOptions.setLayoutY(340);
+		Group background2 = new Group();
 
-				slots[i][j].setOnAction(e -> {
-					if (player.PlayerTurn()) {
+		playOptions.getChildren().addAll(btnPlayer, computer);
+		background2.getChildren().addAll(background, playOptions);
+
+		btnPlayer.setOnAction(a -> {
+			playerState = 1;
+			root.getChildren().remove(background2);
+			
+			for (int i = 0; i < 13; i++) {
+				for (int j = 0; j < 13; j++) {
+					slots[i][j] = new NewButton(i, j);
+					slots[i][j].setShape(new Circle(10));
+					slots[i][j].setMinSize(40, 40);
+					slots[i][j].setMaxSize(40, 40);
+
+					ImageView black2 = new ImageView(black);
+					black2.setPreserveRatio(true);
+					black2.fitWidthProperty().bind(slots[i][j].widthProperty());
+					black2.fitHeightProperty().bind(slots[i][j].heightProperty());
+					ImageView white2 = new ImageView(white);
+					white2.setPreserveRatio(true);
+					white2.fitWidthProperty().bind(slots[i][j].widthProperty());
+					white2.fitHeightProperty().bind(slots[i][j].heightProperty());
+
+					slots[i][j].setStyle();
+					grid.add(slots[i][j], i, j);
+					board.printBoard();
+
+					slots[i][j].setOnAction(e -> {
+						if (player.PlayerTurn()) {
+							((NewButton) e.getSource()).setGraphic(black2);
+							((NewButton) e.getSource()).setDisable(true);
+							((NewButton) e.getSource()).setOpacity(1);
+							player.add();
+							board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
+							board.printBoard();
+						} else {
+							((NewButton) e.getSource()).setGraphic(white2);
+							((NewButton) e.getSource()).setDisable(true);
+							((NewButton) e.getSource()).setOpacity(1);
+							player.sub();
+							board.isWhite(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
+							board.printBoard();
+						}
+						if (board.winner() == 1) {
+							label.setText("Black Wins");
+							grid.setDisable(true);
+						}
+						if (board.winner() == 2) {
+							label.setLayoutX(70);
+							label.setText("White Wins");
+							grid.setDisable(true);
+						}
+					});
+				}
+			}
+			
+		});
+
+		computer.setOnAction(a -> {
+			playerState = 2;
+			root.getChildren().remove(background2);
+
+			for (int i = 0; i < 13; i++) {
+				for (int j = 0; j < 13; j++) {
+					slots[i][j] = new NewButton(i, j);
+					slots[i][j].setShape(new Circle(10));
+					slots[i][j].setMinSize(40, 40);
+					slots[i][j].setMaxSize(40, 40);
+
+					ImageView black2 = new ImageView(black);
+					black2.setPreserveRatio(true);
+					black2.fitWidthProperty().bind(slots[i][j].widthProperty());
+					black2.fitHeightProperty().bind(slots[i][j].heightProperty());
+					ImageView white2 = new ImageView(white);
+					white2.setPreserveRatio(true);
+					white2.fitWidthProperty().bind(slots[i][j].widthProperty());
+					white2.fitHeightProperty().bind(slots[i][j].heightProperty());
+
+					slots[i][j].setStyle();
+					grid.add(slots[i][j], i, j);
+					board.printBoard();
+					slots[i][j].setOnAction(e -> {
+
 						((NewButton) e.getSource()).setGraphic(black2);
 						((NewButton) e.getSource()).setDisable(true);
 						((NewButton) e.getSource()).setOpacity(1);
-						player.add();
 						board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
 						board.printBoard();
-					} else {
-						((NewButton) e.getSource()).setGraphic(white2);
-						((NewButton) e.getSource()).setDisable(true);
-						((NewButton) e.getSource()).setOpacity(1);
-						player.sub();
-						board.isWhite(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
-						board.printBoard();
-					}
-					if (board.winner() == 1) {
-						label.setText("Black Wins");
-						grid.setDisable(true);
-					}
-					if (board.winner() == 2) {
-						label.setLayoutX(70);
-						label.setText("White Wins");
-						grid.setDisable(true);
-					}
-				});
-			}
-		}
+						
+						if (board.winner() == 1) {
+							label.setText("Black Wins");
+							grid.setDisable(true);
+						}
+						if (board.winner() == 2) {
+							label.setLayoutX(70);
+							label.setText("White Wins");
+							grid.setDisable(true);
+						}
+						
+						
+						
+						if (board.getBoard()[ai.getY()][ai.getX() + 1] == 0) {
+							ai.addX();
+							slots[ai.getX()][ai.getY()].setGraphic(white2);
+							slots[ai.getX()][ai.getY()].setDisable(true);
+							slots[ai.getX()][ai.getY()].setOpacity(1);
+							board.isWhite(ai.getX(), ai.getY());
+							board.printBoard();
+						} else if (board.getBoard()[ai.getY() + 1][ai.getX()] == 0) {
+							ai.addY();
+							slots[ai.getX()][ai.getY()].setGraphic(white2);
+							slots[ai.getX()][ai.getY()].setDisable(true);
+							slots[ai.getX()][ai.getY()].setOpacity(1);
+							board.isWhite(ai.getX(), ai.getY());
+							board.printBoard();
+						} else if (board.getBoard()[ai.getY() + 1][ai.getX() + 1] == 0) {
+							ai.addY();
+							ai.addX();
+							slots[ai.getX()][ai.getY()].setGraphic(white2);
+							slots[ai.getX()][ai.getY()].setDisable(true);
+							slots[ai.getX()][ai.getY()].setOpacity(1);
+							board.isWhite(ai.getX(), ai.getY());
+							board.printBoard();
+						} else {
+							ai.setPos2();
+						}
 
-		root.getChildren().addAll(mv, grid, label);
+					});
+				}
+			}
+			
+		});
+		root.getChildren().addAll(mv, grid, background2, label);
 
 		Scene scene = new Scene(root, 700, 700);
+
 		stage.setScene(scene);
 		stage.show();
 		stage.setTitle("Connect 5");
 	}
-	
+
 	private static void delay() {
 		try {
 			Thread.sleep(500);
-		} catch (java.lang.InterruptedException iex){
+		} catch (java.lang.InterruptedException iex) {
 			System.out.println(iex);
 		}
 	}

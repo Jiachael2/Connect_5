@@ -26,13 +26,15 @@ public class Simple_Ai extends Board {
 	public void setPos2() {
 		Random rand = new Random();
 		int n = rand.nextInt(13);
-		if (getBoard()[n][n] == 0) {
-			column = n;
+		int m = rand.nextInt(13);
+		if (getBoard()[n][m] == 0) {
+			column = m;
 			row = n;
 		} else {
-			int i = rand.nextInt(5, 8);
+			int i = rand.nextInt(13);
+			int j = rand.nextInt(13);
 			column = i;
-			row = i;
+			row = j;
 		}
 	}
 

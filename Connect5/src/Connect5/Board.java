@@ -71,18 +71,35 @@ public class Board {
 		// descendingDiagonalCheck
 		for (int i = 0; i < 13; i++) {
 			for (int j = 0; j < 9; j++) {
-				if (board[i][j] == 1 && board[i - 1][j + 1] == 1 && board[i - 2][j + 2] == 1 && board[i - 3][j + 3] == 1
-						&& board[i - 4][j + 4] == 1)
+				if (board[i][j] == 1 && board[i + 1][j + 1] == 1 && board[i + 2][j + 2] == 1 && board[i + 3][j + 3] == 1
+						&& board[i + 4][j + 4] == 1)
 					return 1;
 			}
 		}
 		for (int i = 0; i < 13; i++) {
 			for (int j = 0; j < 9; j++) {
-				if (board[i][j] == 2 && board[i - 1][j + 1] == 2 && board[i - 2][j + 2] == 2 && board[i - 3][j + 3] == 2
-						&& board[i - 4][j + 4] == 2)
+				if (board[i][j] == 2 && board[i + 1][j + 1] == 2 && board[i + 2][j + 2] == 2 && board[i + 3][j + 3] == 2
+						&& board[i + 4][j + 4] == 2)
 					return 2;
 			}
 		}
+		
+		// descendingDiagonalCheck
+				for (int i = 0; i < 13; i++) {
+					for (int j = 0; j < 9; j++) {
+						if (board[i][j] == 1 && board[i + 1][j - 1] == 1 && board[i + 2][j - 2] == 1 && board[i + 3][j - 3] == 1
+								&& board[i + 4][j - 4] == 1)
+							return 1;
+					}
+				}
+				for (int i = 0; i < 13; i++) {
+					for (int j = 0; j < 9; j++) {
+						if (board[i][j] == 2 && board[i + 1][j - 1] == 2 && board[i + 2][j - 2] == 2 && board[i + 3][j - 3] == 2
+								&& board[i + 4][j - 4] == 2)
+							return 2;
+					}
+				}
+				
 		
 		
 
