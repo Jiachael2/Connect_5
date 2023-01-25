@@ -69,7 +69,7 @@ public class Driver extends Application {
 		btnPlayer.setOnAction(a -> {
 			playerState = 1;
 			root.getChildren().remove(background2);
-			
+
 			for (int i = 0; i < 13; i++) {
 				for (int j = 0; j < 13; j++) {
 					slots[i][j] = new NewButton(i, j);
@@ -118,7 +118,7 @@ public class Driver extends Application {
 					});
 				}
 			}
-			
+
 		});
 
 		computer.setOnAction(a -> {
@@ -145,55 +145,61 @@ public class Driver extends Application {
 					grid.add(slots[i][j], i, j);
 					board.printBoard();
 					slots[i][j].setOnAction(e -> {
-
+						try {
 						((NewButton) e.getSource()).setGraphic(black2);
 						((NewButton) e.getSource()).setDisable(true);
 						((NewButton) e.getSource()).setOpacity(1);
 						board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
 						board.printBoard();
-						
+
 						if (board.winner() == 1) {
 							label.setText("Black Wins");
 							grid.setDisable(true);
+							
 						}
 						if (board.winner() == 2) {
 							label.setLayoutX(70);
 							label.setText("White Wins");
 							grid.setDisable(true);
 						}
-						
-						
-						
-						if (board.getBoard()[ai.getY()][ai.getX() + 1] == 0) {
-							ai.addX();
-							slots[ai.getX()][ai.getY()].setGraphic(white2);
-							slots[ai.getX()][ai.getY()].setDisable(true);
-							slots[ai.getX()][ai.getY()].setOpacity(1);
-							board.isWhite(ai.getX(), ai.getY());
-							board.printBoard();
-						} else if (board.getBoard()[ai.getY() + 1][ai.getX()] == 0) {
-							ai.addY();
-							slots[ai.getX()][ai.getY()].setGraphic(white2);
-							slots[ai.getX()][ai.getY()].setDisable(true);
-							slots[ai.getX()][ai.getY()].setOpacity(1);
-							board.isWhite(ai.getX(), ai.getY());
-							board.printBoard();
-						} else if (board.getBoard()[ai.getY() + 1][ai.getX() + 1] == 0) {
-							ai.addY();
-							ai.addX();
-							slots[ai.getX()][ai.getY()].setGraphic(white2);
-							slots[ai.getX()][ai.getY()].setDisable(true);
-							slots[ai.getX()][ai.getY()].setOpacity(1);
-							board.isWhite(ai.getX(), ai.getY());
-							board.printBoard();
-						} else {
+
+						 
+							if (board.getBoard()[ai.getY()][ai.getX() + 1] == 0) {
+								ai.addX();
+								slots[ai.getX()][ai.getY()].setGraphic(white2);
+								slots[ai.getX()][ai.getY()].setDisable(true);
+								slots[ai.getX()][ai.getY()].setOpacity(1);
+								board.isWhite(ai.getX(), ai.getY());
+								board.printBoard();
+							} else if (board.getBoard()[ai.getY() + 1][ai.getX()] == 0) {
+								ai.addY();
+								slots[ai.getX()][ai.getY()].setGraphic(white2);
+								slots[ai.getX()][ai.getY()].setDisable(true);
+								slots[ai.getX()][ai.getY()].setOpacity(1);
+								board.isWhite(ai.getX(), ai.getY());
+								board.printBoard();
+							} else if (board.getBoard()[ai.getY() + 1][ai.getX() + 1] == 0) {
+								ai.addY();
+								ai.addX();
+								slots[ai.getX()][ai.getY()].setGraphic(white2);
+								slots[ai.getX()][ai.getY()].setDisable(true);
+								slots[ai.getX()][ai.getY()].setOpacity(1);
+								board.isWhite(ai.getX(), ai.getY());
+								board.printBoard();
+							} 
+						} catch (Exception e1) {
 							ai.setPos2();
+							slots[ai.getX()][ai.getY()].setGraphic(white2);
+							slots[ai.getX()][ai.getY()].setDisable(true);
+							slots[ai.getX()][ai.getY()].setOpacity(1);
+							board.isWhite(ai.getX(), ai.getY());
+							board.printBoard();
 						}
 
 					});
 				}
 			}
-			
+
 		});
 		root.getChildren().addAll(mv, grid, background2, label);
 
