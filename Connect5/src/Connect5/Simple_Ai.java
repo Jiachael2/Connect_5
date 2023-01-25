@@ -7,10 +7,16 @@ public class Simple_Ai extends Board {
 	private int column;
 	private int row;
 
+	/**
+	 * Constructor
+	 */
 	public Simple_Ai() {
 
 	}
 
+	/**
+	 * sets a random position for the ai piece, limited to the middle area
+	 */
 	public void setPos() {
 		Random rand = new Random();
 		int n = rand.nextInt(5, 8);
@@ -23,6 +29,11 @@ public class Simple_Ai extends Board {
 			row = i;
 		}
 	}
+
+	/**
+	 * sets a new random postition for the ai piece when cornered, no limits within
+	 * the board
+	 */
 	public void setPos2() {
 		Random rand = new Random();
 		int n = rand.nextInt(13);
@@ -38,37 +49,36 @@ public class Simple_Ai extends Board {
 		}
 	}
 
+	/**
+	 * returns y position of ai
+	 * 
+	 * @return
+	 */
 	public int getY() {
 		return column;
 	}
 
+	/**
+	 * returns x position of ai
+	 * 
+	 * @return
+	 */
 	public int getX() {
 		return row;
 	}
 
-	public void setX(int num) {
-		row = num;
-	}
-
-	public void setY(int num) {
-		column = num;
-	}
-
+	/**
+	 * adds one to the ai posX to place
+	 */
 	public void addX() {
 		row += 1;
 	}
 
+	/**
+	 * adds one to the ai posY to place
+	 */
 	public void addY() {
 		column += 1;
-	}
-
-
-	public boolean checkY() {
-		int num = row + 1;
-		if (getBoard()[num][column] == 1) {
-			return false;
-		}
-		return true;
 	}
 
 }

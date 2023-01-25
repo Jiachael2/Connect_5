@@ -15,24 +15,28 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Connect 5
+ * 
+ * @author Michael_Jiang && Allan Fung
+ */
 public class Driver extends Application {
 	static int playerState = 0;
 
 	public void start(Stage stage) {
 
+		// Variables
 		GridPane grid = new GridPane();
 		grid.setMinSize(400, 200);
 		grid.setPadding(new Insets(13, 13, 13, 13));
 		grid.setAlignment(Pos.CENTER);
 		grid.setVgap(13);
 		grid.setHgap(13);
-
 		NewButton[][] slots = new NewButton[13][13];
 		Player player = new Player();
 		Board board = new Board();
 		Simple_Ai ai = new Simple_Ai();
 		board.createBoard();
-
 		Image image = new Image("file:board.png");
 		ImageView mv = new ImageView(image);
 		Image black = new Image("file:bPiece.png");
@@ -45,6 +49,7 @@ public class Driver extends Application {
 		label.setLayoutX(100);
 		label.setLayoutY(200);
 		Group root = new Group();
+		// sets original ai piece position
 		ai.setPos();
 
 		// Buttons to start
@@ -66,6 +71,7 @@ public class Driver extends Application {
 		playOptions.getChildren().addAll(btnPlayer, computer);
 		background2.getChildren().addAll(background, playOptions);
 
+		// player vs player code
 		btnPlayer.setOnAction(a -> {
 			playerState = 1;
 			root.getChildren().remove(background2);
@@ -92,6 +98,7 @@ public class Driver extends Application {
 
 					slots[i][j].setOnAction(e -> {
 						if (player.PlayerTurn()) {
+							// black piece code
 							((NewButton) e.getSource()).setGraphic(black2);
 							((NewButton) e.getSource()).setDisable(true);
 							((NewButton) e.getSource()).setOpacity(1);
@@ -99,6 +106,7 @@ public class Driver extends Application {
 							board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
 							board.printBoard();
 						} else {
+							// white piece code
 							((NewButton) e.getSource()).setGraphic(white2);
 							((NewButton) e.getSource()).setDisable(true);
 							((NewButton) e.getSource()).setOpacity(1);
@@ -106,6 +114,7 @@ public class Driver extends Application {
 							board.isWhite(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
 							board.printBoard();
 						}
+						// determines winners
 						if (board.winner() == 1) {
 							label.setText("Black Wins");
 							grid.setDisable(true);
@@ -121,17 +130,20 @@ public class Driver extends Application {
 
 		});
 
+		// player vs computer
 		computer.setOnAction(a -> {
 			playerState = 2;
 			root.getChildren().remove(background2);
 
 			for (int i = 0; i < 13; i++) {
 				for (int j = 0; j < 13; j++) {
+					//
 					slots[i][j] = new NewButton(i, j);
 					slots[i][j].setShape(new Circle(10));
 					slots[i][j].setMinSize(40, 40);
 					slots[i][j].setMaxSize(40, 40);
 
+					// creates new pieces to place
 					ImageView black2 = new ImageView(black);
 					black2.setPreserveRatio(true);
 					black2.fitWidthProperty().bind(slots[i][j].widthProperty());
@@ -141,29 +153,34 @@ public class Driver extends Application {
 					white2.fitWidthProperty().bind(slots[i][j].widthProperty());
 					white2.fitHeightProperty().bind(slots[i][j].heightProperty());
 
+					// creates the board
 					slots[i][j].setStyle();
 					grid.add(slots[i][j], i, j);
 					board.printBoard();
+
+					// button code
 					slots[i][j].setOnAction(e -> {
 						try {
-						((NewButton) e.getSource()).setGraphic(black2);
-						((NewButton) e.getSource()).setDisable(true);
-						((NewButton) e.getSource()).setOpacity(1);
-						board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
-						board.printBoard();
+							// black piece code
+							((NewButton) e.getSource()).setGraphic(black2);
+							((NewButton) e.getSource()).setDisable(true);
+							((NewButton) e.getSource()).setOpacity(1);
+							board.isBlack(((NewButton) e.getSource()).getRow(), ((NewButton) e.getSource()).getCol());
+							board.printBoard();
 
-						if (board.winner() == 1) {
-							label.setText("Black Wins");
-							grid.setDisable(true);
-							
-						}
-						if (board.winner() == 2) {
-							label.setLayoutX(70);
-							label.setText("White Wins");
-							grid.setDisable(true);
-						}
+							// determines winners
+							if (board.winner() == 1) {
+								label.setText("Black Wins");
+								grid.setDisable(true);
 
-						 
+							}
+							if (board.winner() == 2) {
+								label.setLayoutX(70);
+								label.setText("White Wins");
+								grid.setDisable(true);
+							}
+
+							// white piece code
 							if (board.getBoard()[ai.getY()][ai.getX() + 1] == 0) {
 								ai.addX();
 								slots[ai.getX()][ai.getY()].setGraphic(white2);
@@ -186,7 +203,7 @@ public class Driver extends Application {
 								slots[ai.getX()][ai.getY()].setOpacity(1);
 								board.isWhite(ai.getX(), ai.getY());
 								board.printBoard();
-							} 
+							}
 						} catch (Exception e1) {
 							ai.setPos2();
 							slots[ai.getX()][ai.getY()].setGraphic(white2);
@@ -201,21 +218,13 @@ public class Driver extends Application {
 			}
 
 		});
+
+		// creates the scene
 		root.getChildren().addAll(mv, grid, background2, label);
-
 		Scene scene = new Scene(root, 700, 700);
-
 		stage.setScene(scene);
 		stage.show();
 		stage.setTitle("Connect 5");
-	}
-
-	private static void delay() {
-		try {
-			Thread.sleep(500);
-		} catch (java.lang.InterruptedException iex) {
-			System.out.println(iex);
-		}
 	}
 
 	public static void main(String[] args) {
